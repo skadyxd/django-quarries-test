@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Выгрузка руды</title>
+</head>
+<body>
+    <h1>Состояние самосвалов</h1>
+
+    <!-- Первая таблица: Самосвалы и ввод координат для разгрузки -->
+    <form method="POST">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <th>Бортовой номер</th>
+                <th>Модель</th>
+                <th>Максимальная грузоподъемность (тонны)</th>
+                <th>Текущий вес (тонны)</th>
+<!--                <th>Содержание SiO2 (%)</th>-->
+<!--                <th>Содержание Fe(%)</th>-->
+                <th>Перегруз (%)</th>
+                <th>Координаты разгрузки (X Y)</th>
+            </tr>
+            {% for item in dump_trucks_with_overload %}
+            <tr>
+                <td>{{ item.dump_truck.board_number }}</td>
+                <td>{{ item.dump_truck.model }}</td>
+                <td>{{ item.dump_truck.max_capacity }}</td>
+                <td>{{ item.dump_truck.current_load }}</td>
+<!--                <td>{{ item.dump_truck.sio2_content }}</td>-->
+<!--                <td>{{ item.dump_truck.fe_content }}</td>-->
+                <td>{{ item.overload|floatformat:2 }}</td>
+                <td><input type="text" name="coord_{{ item.dump_truck.id }}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Рассчитать</button>
+    </form>
+
+    <form method="POST" action="{% url 'reset_data' %}">
+        {% csrf_token %}
+        <button type="submit" name="reset">Вернуться к начальным значениям</button>
+    </form>
+
+    <!-- Вторая таблица: Склад -->
+    <h2>Информация о складе</h2>
+    <table border="1">
+        <tr>
+            <th>Название склада</th>
+            <th>Объем до разгрузки (тонн)</th>
+            <th>Объем после разгрузки (тонн)</th>
+            <th>Качественные характеристики после разгрузки</th>
+        </tr>
+        <tr>
+            <td>{{ stock.stock_name }}</td>
+            <td>{{ stock.pre_unloading_volume }}</td>
+            <td>{{ stock.after_unloading_volume }}</td>
+            <td>{{ stock.sio2_content|floatformat:2 }}% SiO2, {{ stock.fe_content|floatformat:2 }}% Fe</td>
+        </tr>
+    </table>
+</body>
+</html>

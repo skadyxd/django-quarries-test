@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path('reset/', views.reset_data, name='reset_data'),
 ]

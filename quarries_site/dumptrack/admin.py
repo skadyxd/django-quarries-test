@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import DumpTruck, Stock, UnloadingEvent
+
+admin.site.register(DumpTruck)
+admin.site.register(Stock)
+admin.site.register(UnloadingEvent)
