@@ -15,7 +15,9 @@ class DumpTruck(models.Model):
 
 
 class Stock(models.Model):
-    total_volume = models.FloatField(verbose_name='Текущий объем руды (тонн)')
+    stock_name = models.CharField(max_length=256, verbose_name='Название склада')
+    pre_unloading_volume = models.FloatField(verbose_name='Объем до разгрузки (тонн)')
+    after_unloading_volume = models.FloatField(verbose_name='Объем после разгрузки (тонн)')
     sio2_content = models.FloatField(verbose_name='Содержание SiO2 (%)')
     fe_content = models.FloatField(verbose_name='Содержание Fe (%)')
     polygon_wkt = models.TextField(verbose_name="Полигон склада (WKT)")
