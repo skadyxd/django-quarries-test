@@ -27,6 +27,7 @@ class Stock(models.Model):
 
 class UnloadingEvent(models.Model):
     dumptruck = models.ForeignKey(DumpTruck, on_delete=models.CASCADE, verbose_name="Самосвал")
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, verbose_name="Склад")
     volume = models.IntegerField(verbose_name="Объем разгрузки (тонн)")
     x = models.FloatField(verbose_name="Координата X")
     y = models.FloatField(verbose_name="Координата Y")
